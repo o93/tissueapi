@@ -23,7 +23,6 @@ public class Task implements Serializable {
     private Long version;
 
     private String name;
-    private long category;
     
     @Attribute(unindexed = true)
     private Date beginAt;
@@ -33,15 +32,21 @@ public class Task implements Serializable {
     
     private long repeat;
     
+    private ModelRef<Category> categoryRef = new ModelRef<Category>(Category.class);
     private ModelRef<User> userRef = new ModelRef<User>(User.class);
-    @Attribute(persistent = false)
-    private User user;
 
     @Attribute(listener = CreationDate.class)
     private Date createdAt;
     @Attribute(listener = ModificationDate.class)
     private Date updatedAt;
 
+    @Attribute(persistent = false)
+    private Category category;
+    @Attribute(persistent = false)
+    private User user;
+    @Attribute(persistent = false)
+    private Spot spot;
+    
     /**
      * Returns the key.
      *
@@ -117,15 +122,7 @@ public class Task implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    public long getCategory() {
-        return category;
-    }
-
-    public void setCategory(long category) {
-        this.category = category;
-    }
-
+    
     public Date getBeginAt() {
         return beginAt;
     }
@@ -176,5 +173,25 @@ public class Task implements Serializable {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public ModelRef<Category> getCategoryRef() {
+        return categoryRef;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Spot getSpot() {
+        return spot;
+    }
+
+    public void setSpot(Spot spot) {
+        this.spot = spot;
     }
 }
