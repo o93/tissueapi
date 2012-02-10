@@ -19,13 +19,15 @@ public class At implements Serializable {
     @Attribute(version = true)
     private Long version;
     
-    private ModelRef<Task> taskRef = new ModelRef<Task>(Task.class);
     private ModelRef<User> userRef = new ModelRef<User>(User.class);
     
-    private int yearmonth;
+    private int month;
+    private int week;
     private int day;
-    private int timeslot;
-
+    private long timeslot;
+    
+    private long like;
+    
     /**
      * Returns the key.
      *
@@ -102,27 +104,39 @@ public class At implements Serializable {
         this.day = day;
     }
 
-    public int getTimeslot() {
+    public long getTimeslot() {
         return timeslot;
     }
 
-    public void setTimeslot(int timeslot) {
+    public void setTimeslot(long timeslot) {
         this.timeslot = timeslot;
-    }
-
-    public int getYearmonth() {
-        return yearmonth;
-    }
-
-    public void setYearmonth(int yearmonth) {
-        this.yearmonth = yearmonth;
     }
 
     public ModelRef<User> getUserRef() {
         return userRef;
     }
 
-    public ModelRef<Task> getTaskRef() {
-        return taskRef;
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setWeek(int week) {
+        this.week = week;
+    }
+
+    public int getWeek() {
+        return week;
+    }
+
+    public void setLike(long like) {
+        this.like = like;
+    }
+
+    public long getLike() {
+        return like;
     }
 }

@@ -1,8 +1,11 @@
 package me.o93.tissue.meta;
 
-//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-02-10 20:23:37")
+//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-02-11 01:42:18")
 /** */
 public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.model.Task> {
+
+    /** */
+    public final org.slim3.datastore.ModelRefAttributeMeta<me.o93.tissue.model.Task, org.slim3.datastore.ModelRef<me.o93.tissue.model.At>, me.o93.tissue.model.At> atRef = new org.slim3.datastore.ModelRefAttributeMeta<me.o93.tissue.model.Task, org.slim3.datastore.ModelRef<me.o93.tissue.model.At>, me.o93.tissue.model.At>(this, "atRef", "atRef", org.slim3.datastore.ModelRef.class, me.o93.tissue.model.At.class);
 
     /** */
     public final org.slim3.datastore.CoreUnindexedAttributeMeta<me.o93.tissue.model.Task, java.util.Date> beginAt = new org.slim3.datastore.CoreUnindexedAttributeMeta<me.o93.tissue.model.Task, java.util.Date>(this, "beginAt", "beginAt", java.util.Date.class);
@@ -64,6 +67,10 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
     @Override
     public me.o93.tissue.model.Task entityToModel(com.google.appengine.api.datastore.Entity entity) {
         me.o93.tissue.model.Task model = new me.o93.tissue.model.Task();
+        if (model.getAtRef() == null) {
+            throw new NullPointerException("The property(atRef) is null.");
+        }
+        model.getAtRef().setKey((com.google.appengine.api.datastore.Key) entity.getProperty("atRef"));
         model.setBeginAt((java.util.Date) entity.getProperty("beginAt"));
         model.setCreatedAt((java.util.Date) entity.getProperty("createdAt"));
         model.setEndAt((java.util.Date) entity.getProperty("endAt"));
@@ -95,6 +102,10 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
         } else {
             entity = new com.google.appengine.api.datastore.Entity(kind);
         }
+        if (m.getAtRef() == null) {
+            throw new NullPointerException("The property(atRef) must not be null.");
+        }
+        entity.setProperty("atRef", m.getAtRef().getKey());
         entity.setUnindexedProperty("beginAt", m.getBeginAt());
         entity.setProperty("createdAt", m.getCreatedAt());
         entity.setUnindexedProperty("endAt", m.getEndAt());
@@ -139,6 +150,10 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
     @Override
     protected void assignKeyToModelRefIfNecessary(com.google.appengine.api.datastore.AsyncDatastoreService ds, java.lang.Object model) {
         me.o93.tissue.model.Task m = (me.o93.tissue.model.Task) model;
+        if (m.getAtRef() == null) {
+            throw new NullPointerException("The property(atRef) must not be null.");
+        }
+        m.getAtRef().assignKeyIfNecessary(ds);
         if (m.getParentRef() == null) {
             throw new NullPointerException("The property(parentRef) must not be null.");
         }
@@ -187,6 +202,10 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
         me.o93.tissue.model.Task m = (me.o93.tissue.model.Task) model;
         writer.beginObject();
         org.slim3.datastore.json.Default encoder0 = new org.slim3.datastore.json.Default();
+        if(m.getAtRef() != null && m.getAtRef().getKey() != null){
+            writer.setNextPropertyName("atRef");
+            encoder0.encode(writer, m.getAtRef(), maxDepth, currentDepth);
+        }
         if(m.getBeginAt() != null){
             writer.setNextPropertyName("beginAt");
             encoder0.encode(writer, m.getBeginAt());
@@ -253,6 +272,8 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
         me.o93.tissue.model.Task m = new me.o93.tissue.model.Task();
         org.slim3.datastore.json.JsonReader reader = null;
         org.slim3.datastore.json.Default decoder0 = new org.slim3.datastore.json.Default();
+        reader = rootReader.newObjectReader("atRef");
+        decoder0.decode(reader, m.getAtRef(), maxDepth, currentDepth);
         reader = rootReader.newObjectReader("beginAt");
         m.setBeginAt(decoder0.decode(reader, m.getBeginAt()));
         reader = rootReader.newObjectReader("createdAt");

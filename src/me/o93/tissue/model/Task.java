@@ -39,6 +39,7 @@ public class Task implements Serializable {
     
     private ModelRef<User> userRef = new ModelRef<User>(User.class);
     private ModelRef<Task> parentRef = new ModelRef<Task>(Task.class);
+    private ModelRef<At> atRef = new ModelRef<At>(At.class);
     
     @Attribute(listener = CreationDate.class)
     private Date createdAt;
@@ -202,5 +203,9 @@ public class Task implements Serializable {
 
     public void setPoint(GeoPt point) {
         this.point = point;
+    }
+
+    public ModelRef<At> getAtRef() {
+        return atRef;
     }
 }
