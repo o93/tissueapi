@@ -1,16 +1,16 @@
-package me.o93.tissue.model;
+package me.o93.tissue.service;
 
 import org.slim3.tester.AppEngineTestCase;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-public class SpotTest extends AppEngineTestCase {
+public class TaskServiceTest extends AppEngineTestCase {
 
-    private Spot model = new Spot();
+    private TaskService service = new TaskService();
 
     @Test
     public void test() throws Exception {
-        assertThat(model, is(notNullValue()));
+        assertThat(service, is(notNullValue()));
     }
 }

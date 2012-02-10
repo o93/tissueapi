@@ -12,5 +12,9 @@ public class UserTest extends AppEngineTestCase {
     @Test
     public void test() throws Exception {
         assertThat(model, is(notNullValue()));
+        
+        model.setName("aaa");
+        
+        assertThat(model.getName(), is("aaa"));
     }
 }

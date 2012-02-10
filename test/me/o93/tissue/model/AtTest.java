@@ -12,5 +12,13 @@ public class AtTest extends AppEngineTestCase {
     @Test
     public void test() throws Exception {
         assertThat(model, is(notNullValue()));
+        
+        model.setYearmonth(1);
+        model.setDay(2);
+        model.setTimeslot(3);
+        
+        assertThat(model.getYearmonth(), is(1));
+        assertThat(model.getDay(), is(2));
+        assertThat(model.getTimeslot(), is(3));
     }
 }

@@ -2,6 +2,7 @@ package me.o93.tissue.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.CreationDate;
@@ -9,13 +10,13 @@ import org.slim3.datastore.Model;
 import org.slim3.datastore.ModelRef;
 import org.slim3.datastore.ModificationDate;
 
+import com.google.appengine.api.datastore.GeoPt;
 import com.google.appengine.api.datastore.Key;
 
 @Model(schemaVersion = 1)
 public class Task implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
+    
     @Attribute(primaryKey = true)
     private Key key;
 
@@ -26,26 +27,26 @@ public class Task implements Serializable {
     
     @Attribute(unindexed = true)
     private Date beginAt;
-
     @Attribute(unindexed = true)
     private Date endAt;
     
     private long repeat;
     
-    private ModelRef<Category> categoryRef = new ModelRef<Category>(Category.class);
+    private String spotName;
+    private GeoPt point;
+    
+    private List<String> tags;
+    
     private ModelRef<User> userRef = new ModelRef<User>(User.class);
-
+    private ModelRef<Task> parentRef = new ModelRef<Task>(Task.class);
+    
     @Attribute(listener = CreationDate.class)
     private Date createdAt;
     @Attribute(listener = ModificationDate.class)
     private Date updatedAt;
 
     @Attribute(persistent = false)
-    private Category category;
-    @Attribute(persistent = false)
     private User user;
-    @Attribute(persistent = false)
-    private Spot spot;
     
     /**
      * Returns the key.
@@ -174,24 +175,32 @@ public class Task implements Serializable {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
-
-    public ModelRef<Category> getCategoryRef() {
-        return categoryRef;
+    
+    public ModelRef<Task> getParentRef() {
+        return parentRef;
     }
 
-    public Category getCategory() {
-        return category;
+    public List<String> getTags() {
+        return tags;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
-    public Spot getSpot() {
-        return spot;
+    public String getSpotName() {
+        return spotName;
     }
 
-    public void setSpot(Spot spot) {
-        this.spot = spot;
+    public void setSpotName(String spotName) {
+        this.spotName = spotName;
+    }
+
+    public GeoPt getPoint() {
+        return point;
+    }
+
+    public void setPoint(GeoPt point) {
+        this.point = point;
     }
 }

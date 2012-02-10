@@ -1,14 +1,11 @@
 package me.o93.tissue.meta;
 
-//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-02-10 10:16:33")
+//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-02-10 20:23:37")
 /** */
 public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.model.Task> {
 
     /** */
     public final org.slim3.datastore.CoreUnindexedAttributeMeta<me.o93.tissue.model.Task, java.util.Date> beginAt = new org.slim3.datastore.CoreUnindexedAttributeMeta<me.o93.tissue.model.Task, java.util.Date>(this, "beginAt", "beginAt", java.util.Date.class);
-
-    /** */
-    public final org.slim3.datastore.ModelRefAttributeMeta<me.o93.tissue.model.Task, org.slim3.datastore.ModelRef<me.o93.tissue.model.Category>, me.o93.tissue.model.Category> categoryRef = new org.slim3.datastore.ModelRefAttributeMeta<me.o93.tissue.model.Task, org.slim3.datastore.ModelRef<me.o93.tissue.model.Category>, me.o93.tissue.model.Category>(this, "categoryRef", "categoryRef", org.slim3.datastore.ModelRef.class, me.o93.tissue.model.Category.class);
 
     /** */
     public final org.slim3.datastore.CoreAttributeMeta<me.o93.tissue.model.Task, java.util.Date> createdAt = new org.slim3.datastore.CoreAttributeMeta<me.o93.tissue.model.Task, java.util.Date>(this, "createdAt", "createdAt", java.util.Date.class);
@@ -23,7 +20,19 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
     public final org.slim3.datastore.StringAttributeMeta<me.o93.tissue.model.Task> name = new org.slim3.datastore.StringAttributeMeta<me.o93.tissue.model.Task>(this, "name", "name");
 
     /** */
+    public final org.slim3.datastore.ModelRefAttributeMeta<me.o93.tissue.model.Task, org.slim3.datastore.ModelRef<me.o93.tissue.model.Task>, me.o93.tissue.model.Task> parentRef = new org.slim3.datastore.ModelRefAttributeMeta<me.o93.tissue.model.Task, org.slim3.datastore.ModelRef<me.o93.tissue.model.Task>, me.o93.tissue.model.Task>(this, "parentRef", "parentRef", org.slim3.datastore.ModelRef.class, me.o93.tissue.model.Task.class);
+
+    /** */
+    public final org.slim3.datastore.CoreAttributeMeta<me.o93.tissue.model.Task, com.google.appengine.api.datastore.GeoPt> point = new org.slim3.datastore.CoreAttributeMeta<me.o93.tissue.model.Task, com.google.appengine.api.datastore.GeoPt>(this, "point", "point", com.google.appengine.api.datastore.GeoPt.class);
+
+    /** */
     public final org.slim3.datastore.CoreAttributeMeta<me.o93.tissue.model.Task, java.lang.Long> repeat = new org.slim3.datastore.CoreAttributeMeta<me.o93.tissue.model.Task, java.lang.Long>(this, "repeat", "repeat", long.class);
+
+    /** */
+    public final org.slim3.datastore.StringAttributeMeta<me.o93.tissue.model.Task> spotName = new org.slim3.datastore.StringAttributeMeta<me.o93.tissue.model.Task>(this, "spotName", "spotName");
+
+    /** */
+    public final org.slim3.datastore.StringCollectionAttributeMeta<me.o93.tissue.model.Task, java.util.List<java.lang.String>> tags = new org.slim3.datastore.StringCollectionAttributeMeta<me.o93.tissue.model.Task, java.util.List<java.lang.String>>(this, "tags", "tags", java.util.List.class);
 
     /** */
     public final org.slim3.datastore.CoreAttributeMeta<me.o93.tissue.model.Task, java.util.Date> updatedAt = new org.slim3.datastore.CoreAttributeMeta<me.o93.tissue.model.Task, java.util.Date>(this, "updatedAt", "updatedAt", java.util.Date.class);
@@ -56,15 +65,18 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
     public me.o93.tissue.model.Task entityToModel(com.google.appengine.api.datastore.Entity entity) {
         me.o93.tissue.model.Task model = new me.o93.tissue.model.Task();
         model.setBeginAt((java.util.Date) entity.getProperty("beginAt"));
-        if (model.getCategoryRef() == null) {
-            throw new NullPointerException("The property(categoryRef) is null.");
-        }
-        model.getCategoryRef().setKey((com.google.appengine.api.datastore.Key) entity.getProperty("categoryRef"));
         model.setCreatedAt((java.util.Date) entity.getProperty("createdAt"));
         model.setEndAt((java.util.Date) entity.getProperty("endAt"));
         model.setKey(entity.getKey());
         model.setName((java.lang.String) entity.getProperty("name"));
+        if (model.getParentRef() == null) {
+            throw new NullPointerException("The property(parentRef) is null.");
+        }
+        model.getParentRef().setKey((com.google.appengine.api.datastore.Key) entity.getProperty("parentRef"));
+        model.setPoint((com.google.appengine.api.datastore.GeoPt) entity.getProperty("point"));
         model.setRepeat(longToPrimitiveLong((java.lang.Long) entity.getProperty("repeat")));
+        model.setSpotName((java.lang.String) entity.getProperty("spotName"));
+        model.setTags(toList(java.lang.String.class, entity.getProperty("tags")));
         model.setUpdatedAt((java.util.Date) entity.getProperty("updatedAt"));
         if (model.getUserRef() == null) {
             throw new NullPointerException("The property(userRef) is null.");
@@ -84,14 +96,17 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
             entity = new com.google.appengine.api.datastore.Entity(kind);
         }
         entity.setUnindexedProperty("beginAt", m.getBeginAt());
-        if (m.getCategoryRef() == null) {
-            throw new NullPointerException("The property(categoryRef) must not be null.");
-        }
-        entity.setProperty("categoryRef", m.getCategoryRef().getKey());
         entity.setProperty("createdAt", m.getCreatedAt());
         entity.setUnindexedProperty("endAt", m.getEndAt());
         entity.setProperty("name", m.getName());
+        if (m.getParentRef() == null) {
+            throw new NullPointerException("The property(parentRef) must not be null.");
+        }
+        entity.setProperty("parentRef", m.getParentRef().getKey());
+        entity.setProperty("point", m.getPoint());
         entity.setProperty("repeat", m.getRepeat());
+        entity.setProperty("spotName", m.getSpotName());
+        entity.setProperty("tags", m.getTags());
         entity.setProperty("updatedAt", m.getUpdatedAt());
         if (m.getUserRef() == null) {
             throw new NullPointerException("The property(userRef) must not be null.");
@@ -124,10 +139,10 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
     @Override
     protected void assignKeyToModelRefIfNecessary(com.google.appengine.api.datastore.AsyncDatastoreService ds, java.lang.Object model) {
         me.o93.tissue.model.Task m = (me.o93.tissue.model.Task) model;
-        if (m.getCategoryRef() == null) {
-            throw new NullPointerException("The property(categoryRef) must not be null.");
+        if (m.getParentRef() == null) {
+            throw new NullPointerException("The property(parentRef) must not be null.");
         }
-        m.getCategoryRef().assignKeyIfNecessary(ds);
+        m.getParentRef().assignKeyIfNecessary(ds);
         if (m.getUserRef() == null) {
             throw new NullPointerException("The property(userRef) must not be null.");
         }
@@ -176,14 +191,6 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
             writer.setNextPropertyName("beginAt");
             encoder0.encode(writer, m.getBeginAt());
         }
-        if(m.getCategory() != null){
-            writer.setNextPropertyName("category");
-            encoder0.encode(writer, m.getCategory());
-        }
-        if(m.getCategoryRef() != null && m.getCategoryRef().getKey() != null){
-            writer.setNextPropertyName("categoryRef");
-            encoder0.encode(writer, m.getCategoryRef(), maxDepth, currentDepth);
-        }
         if(m.getCreatedAt() != null){
             writer.setNextPropertyName("createdAt");
             encoder0.encode(writer, m.getCreatedAt());
@@ -200,11 +207,27 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
             writer.setNextPropertyName("name");
             encoder0.encode(writer, m.getName());
         }
+        if(m.getParentRef() != null && m.getParentRef().getKey() != null){
+            writer.setNextPropertyName("parentRef");
+            encoder0.encode(writer, m.getParentRef(), maxDepth, currentDepth);
+        }
+        if(m.getPoint() != null){
+            writer.setNextPropertyName("point");
+            encoder0.encode(writer, m.getPoint());
+        }
         writer.setNextPropertyName("repeat");
         encoder0.encode(writer, m.getRepeat());
-        if(m.getSpot() != null){
-            writer.setNextPropertyName("spot");
-            encoder0.encode(writer, m.getSpot());
+        if(m.getSpotName() != null){
+            writer.setNextPropertyName("spotName");
+            encoder0.encode(writer, m.getSpotName());
+        }
+        if(m.getTags() != null){
+            writer.setNextPropertyName("tags");
+            writer.beginArray();
+            for(java.lang.String v : m.getTags()){
+                encoder0.encode(writer, v);
+            }
+            writer.endArray();
         }
         if(m.getUpdatedAt() != null){
             writer.setNextPropertyName("updatedAt");
@@ -232,10 +255,6 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
         org.slim3.datastore.json.Default decoder0 = new org.slim3.datastore.json.Default();
         reader = rootReader.newObjectReader("beginAt");
         m.setBeginAt(decoder0.decode(reader, m.getBeginAt()));
-        reader = rootReader.newObjectReader("category");
-        m.setCategory(decoder0.decode(reader, m.getCategory(), me.o93.tissue.model.Category.class));
-        reader = rootReader.newObjectReader("categoryRef");
-        decoder0.decode(reader, m.getCategoryRef(), maxDepth, currentDepth);
         reader = rootReader.newObjectReader("createdAt");
         m.setCreatedAt(decoder0.decode(reader, m.getCreatedAt()));
         reader = rootReader.newObjectReader("endAt");
@@ -244,10 +263,31 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
         m.setKey(decoder0.decode(reader, m.getKey()));
         reader = rootReader.newObjectReader("name");
         m.setName(decoder0.decode(reader, m.getName()));
+        reader = rootReader.newObjectReader("parentRef");
+        decoder0.decode(reader, m.getParentRef(), maxDepth, currentDepth);
+        reader = rootReader.newObjectReader("point");
+        m.setPoint(decoder0.decode(reader, m.getPoint()));
         reader = rootReader.newObjectReader("repeat");
         m.setRepeat(decoder0.decode(reader, m.getRepeat()));
-        reader = rootReader.newObjectReader("spot");
-        m.setSpot(decoder0.decode(reader, m.getSpot(), me.o93.tissue.model.Spot.class));
+        reader = rootReader.newObjectReader("spotName");
+        m.setSpotName(decoder0.decode(reader, m.getSpotName()));
+        reader = rootReader.newObjectReader("tags");
+        {
+            java.util.ArrayList<java.lang.String> elements = new java.util.ArrayList<java.lang.String>();
+            org.slim3.datastore.json.JsonArrayReader r = rootReader.newArrayReader("tags");
+            if(r != null){
+                reader = r;
+                int n = r.length();
+                for(int i = 0; i < n; i++){
+                    r.setIndex(i);
+                    java.lang.String v = decoder0.decode(reader, (java.lang.String)null)                    ;
+                    if(v != null){
+                        elements.add(v);
+                    }
+                }
+                m.setTags(elements);
+            }
+        }
         reader = rootReader.newObjectReader("updatedAt");
         m.setUpdatedAt(decoder0.decode(reader, m.getUpdatedAt()));
         reader = rootReader.newObjectReader("user");

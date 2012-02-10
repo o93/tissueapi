@@ -1,6 +1,6 @@
 package me.o93.tissue.meta;
 
-//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-02-10 10:16:33")
+//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-02-10 20:23:37")
 /** */
 public final class LikeMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.model.Like> {
 
