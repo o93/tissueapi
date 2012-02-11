@@ -67,7 +67,7 @@ public class TaskService {
 
     private Task getTask(Transaction tx, HttpServletRequest request, RequestMap input, String keyString) {
         Task task;
-        if (keyString == null || "".equals(keyString)) {
+        if (isNull(keyString)) {
             task = new Task();
             task.setKey(Datastore.allocateId(Task.class));
         } else {
@@ -83,7 +83,9 @@ public class TaskService {
         task.getUserRef().setKey(KeyFactory.stringToKey((String) input.get(PARAM_USER_KEY)));
         
         String parentKeyString = (String) input.get(PARAM_PARENT_KEY);
-        if (parentKeyString != null && !"".equals(parentKeyString)) {
+        if (isNull(parentKeyString)) {
+            task.getParentRef().setKey(null);
+        } else {
             task.getParentRef().setKey(KeyFactory.stringToKey(parentKeyString));
         }
         return task;
@@ -91,7 +93,7 @@ public class TaskService {
 
     private GeoPt getGeoPt(RequestMap input) {
         String geoPtString = (String) input.get(PARAM_POINT);
-        if (geoPtString == null || "".equals(geoPtString)) {
+        if (isNull(geoPtString)) {
             return null;
         }
         String[] geoPtArray = geoPtString.split(",");
@@ -103,7 +105,7 @@ public class TaskService {
     
     private At getAt(Transaction tx, Task task, String keyString) {
         At at = null;
-        if (keyString == null || "".equals(keyString)) {
+        if (isNull(keyString)) {
             at = new At();
             at.setKey(Datastore.allocateId(task.getKey(), At.class));
             task.getAtRef().setKey(at.getKey());
@@ -115,7 +117,11 @@ public class TaskService {
         
         return at;
     }
-    
+
+    private boolean isNull(String parentKeyString) {
+        return parentKeyString == null || "".equals(parentKeyString);
+    }
+
     private static void sleep() {
         try {
             Thread.sleep(20);
