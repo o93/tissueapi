@@ -46,6 +46,10 @@ public class TaskTest extends AppEngineTestCase {
         Datastore.put(task);
         model.getParentRef().setKey(task.getKey());
         
+        At at = new At();
+        Datastore.put(at);
+        model.getAtRef().setKey(at.getKey());
+        
         assertThat(model.getBeginAt().getTime(), is(1000000L));
         assertThat(model.getCreatedAt().getTime(), is(2000000L));
         assertThat(model.getEndAt().getTime(), is(3000000L));
@@ -62,7 +66,7 @@ public class TaskTest extends AppEngineTestCase {
         assertThat(model.getUpdatedAt().getTime(), is(4000000L));
         
         assertThat(model.getUser().getKey(), is(user.getKey()));
-        
         assertThat(model.getParentRef().getKey(), is(task.getKey()));
+        assertThat(model.getAtRef().getKey(), is(at.getKey()));
     }
 }

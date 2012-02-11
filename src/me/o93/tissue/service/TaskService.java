@@ -54,15 +54,13 @@ public class TaskService {
     }
     
     private Task put(Transaction tx, HttpServletRequest request) {
-        
         RequestMap input = new RequestMap(request);
         String keyString = (String) input.get(PARAM_KEY);
         
         Task task = getTask(tx, request, input, keyString);
-        At at = getAt(tx, request, task, keyString);
+        At at = getAt(tx, task, keyString);
         
         Datastore.put(tx, task, at);
-        tx.commit();
         
         return task;
     }
@@ -103,7 +101,7 @@ public class TaskService {
         return null;
     }
     
-    private At getAt(Transaction tx, HttpServletRequest request, Task task, String keyString) {
+    private At getAt(Transaction tx, Task task, String keyString) {
         At at = null;
         if (keyString == null || "".equals(keyString)) {
             at = new At();
@@ -113,8 +111,7 @@ public class TaskService {
             at = Datastore.get(tx, At.class, task.getAtRef().getKey());
         }
         at.getUserRef().setKey(task.getUserRef().getKey());
-        
-        // TODO:timezone..umm..
+        at.refreshRanges(task.getBeginAt());
         
         return at;
     }

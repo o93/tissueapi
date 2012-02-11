@@ -1,10 +1,15 @@
 package me.o93.tissue.model;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.junit.Test;
 import org.slim3.datastore.Datastore;
 import org.slim3.tester.AppEngineTestCase;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
 
 public class AtTest extends AppEngineTestCase {
 
@@ -14,24 +19,37 @@ public class AtTest extends AppEngineTestCase {
     public void test() throws Exception {
         assertThat(model, is(notNullValue()));
         
-        model.setMonth(1);
-        model.setWeek(2);
-        model.setDay(3);
-        model.setTimeslot(4);
-        
-        model.setLike(5L);
-        
         User user = new User();
         Datastore.put(user);
         model.getUserRef().setKey(user.getKey());
         
-        assertThat(model.getMonth(), is(1));
-        assertThat(model.getWeek(), is(2));
-        assertThat(model.getDay(), is(3));
-        assertThat(model.getTimeslot(), is(4L));
-        
-        assertThat(model.getLike(), is(5L));
+        ArrayList<String> ranges = new ArrayList<String>();
+        ranges.add("aaa");
+        ranges.add("bbb");
+        model.setRanges(ranges);
         
         assertThat(model.getUserRef().getKey(), is(user.getKey()));
+        assertThat(model.getRanges().get(0), is("aaa"));
+        assertThat(model.getRanges().get(1), is("bbb"));
+    }
+    
+    @Test
+    public void refresh() throws Exception {
+        At at = new At();
+        
+        at.refreshRanges(new Date(1000));
+        
+        assertThat(at.getRanges().get(0), is("D0000000000000001000"));
+        assertThat(at.getRanges().get(1), is("L00000000000"));
+        
+        at.refreshRanges(new Date(2000));
+        
+        assertThat(at.getRanges().get(0), is("D0000000000000002000"));
+        assertThat(at.getRanges().get(1), is("L00000000000"));
+        
+        at.refreshRanges(2);
+        
+        assertThat(at.getRanges().get(0), is("D0000000000000002000"));
+        assertThat(at.getRanges().get(1), is("L00000000002"));
     }
 }

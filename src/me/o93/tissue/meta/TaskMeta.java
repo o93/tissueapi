@@ -1,6 +1,6 @@
 package me.o93.tissue.meta;
 
-//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-02-11 01:42:18")
+//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-02-12 00:25:07")
 /** */
 public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.model.Task> {
 
@@ -222,6 +222,8 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
             writer.setNextPropertyName("key");
             encoder0.encode(writer, m.getKey());
         }
+        writer.setNextPropertyName("likeCount");
+        encoder0.encode(writer, m.getLikeCount());
         if(m.getName() != null){
             writer.setNextPropertyName("name");
             encoder0.encode(writer, m.getName());
@@ -282,6 +284,8 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
         m.setEndAt(decoder0.decode(reader, m.getEndAt()));
         reader = rootReader.newObjectReader("key");
         m.setKey(decoder0.decode(reader, m.getKey()));
+        reader = rootReader.newObjectReader("likeCount");
+        m.setLikeCount(decoder0.decode(reader, m.getLikeCount()));
         reader = rootReader.newObjectReader("name");
         m.setName(decoder0.decode(reader, m.getName()));
         reader = rootReader.newObjectReader("parentRef");

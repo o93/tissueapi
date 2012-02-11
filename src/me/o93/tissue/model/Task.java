@@ -48,6 +48,8 @@ public class Task implements Serializable {
 
     @Attribute(persistent = false)
     private User user;
+    @Attribute(persistent = false)
+    private long likeCount;
     
     /**
      * Returns the key.
@@ -207,5 +209,13 @@ public class Task implements Serializable {
 
     public ModelRef<At> getAtRef() {
         return atRef;
+    }
+
+    public void setLikeCount(long likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public long getLikeCount() {
+        return likeCount;
     }
 }

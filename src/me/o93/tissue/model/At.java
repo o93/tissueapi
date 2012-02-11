@@ -1,6 +1,10 @@
 package me.o93.tissue.model;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
@@ -10,9 +14,14 @@ import com.google.appengine.api.datastore.Key;
 
 @Model(schemaVersion = 1)
 public class At implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
+    private static final String LIKE = "L";
+    private static final String DATE = "D";
+    
+    private static final String LIKE_FORMAT = "00000000000";
+    private static final String DATE_FORMAT = "0000000000000000000";
+    
     @Attribute(primaryKey = true)
     private Key key;
 
@@ -21,12 +30,7 @@ public class At implements Serializable {
     
     private ModelRef<User> userRef = new ModelRef<User>(User.class);
     
-    private int month;
-    private int week;
-    private int day;
-    private long timeslot;
-    
-    private long like;
+    private List<String> ranges;
     
     /**
      * Returns the key.
@@ -96,47 +100,39 @@ public class At implements Serializable {
         return true;
     }
 
-    public int getDay() {
-        return day;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public long getTimeslot() {
-        return timeslot;
-    }
-
-    public void setTimeslot(long timeslot) {
-        this.timeslot = timeslot;
-    }
-
     public ModelRef<User> getUserRef() {
         return userRef;
     }
 
-    public void setMonth(int month) {
-        this.month = month;
+    public void setRanges(List<String> ranges) {
+        this.ranges = ranges;
     }
 
-    public int getMonth() {
-        return month;
+    public List<String> getRanges() {
+        return ranges;
     }
 
-    public void setWeek(int week) {
-        this.week = week;
+    public void refreshRanges(Date date) {
+        DecimalFormat dateFormat = new DecimalFormat(DATE_FORMAT);
+        String dateString = DATE + dateFormat.format(date.getTime());
+        
+        List<String> ranges = getRanges();
+        if (ranges == null) {
+            ranges = new ArrayList<String>();
+            ranges.add(dateString);
+            DecimalFormat likeFormat = new DecimalFormat(LIKE_FORMAT);
+            ranges.add(LIKE + likeFormat.format(0));
+        } else {
+            ranges.set(0, dateString);
+        }
+        setRanges(ranges);
     }
-
-    public int getWeek() {
-        return week;
-    }
-
-    public void setLike(long like) {
-        this.like = like;
-    }
-
-    public long getLike() {
-        return like;
+    
+    public void refreshRanges(long like) {
+        DecimalFormat likeFormat = new DecimalFormat(LIKE_FORMAT);
+        String likeString = LIKE + likeFormat.format(like);
+        
+        List<String> ranges = getRanges();
+        ranges.set(1, likeString);
     }
 }
