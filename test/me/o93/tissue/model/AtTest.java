@@ -37,17 +37,17 @@ public class AtTest extends AppEngineTestCase {
     public void refresh() throws Exception {
         At at = new At();
         
-        at.refreshRanges(new Date(1000));
+        at.refreshDate(new Date(1000));
         
         assertThat(at.getRanges().get(0), is("D0000000000000001000"));
         assertThat(at.getRanges().get(1), is("L00000000000"));
         
-        at.refreshRanges(new Date(2000));
+        at.refreshDate(new Date(2000));
         
         assertThat(at.getRanges().get(0), is("D0000000000000002000"));
         assertThat(at.getRanges().get(1), is("L00000000000"));
         
-        at.refreshRanges(2);
+        at.refreshLike(2);
         
         assertThat(at.getRanges().get(0), is("D0000000000000002000"));
         assertThat(at.getRanges().get(1), is("L00000000002"));

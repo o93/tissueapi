@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import me.o93.tissue.model.At;
 import me.o93.tissue.model.Task;
+import me.o93.tissue.model.User;
 
 import org.slim3.datastore.Datastore;
 import org.slim3.util.BeanUtil;
@@ -14,6 +15,7 @@ import org.slim3.util.RequestMap;
 
 import com.google.appengine.api.datastore.DatastoreTimeoutException;
 import com.google.appengine.api.datastore.GeoPt;
+import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Transaction;
 import com.google.apphosting.api.ApiProxy.UnknownException;
@@ -80,7 +82,9 @@ public class TaskService {
         String[] tagsArray = request.getParameterValues(PARAM_TAGS);
         task.setTags(Arrays.asList(tagsArray));
         
-        task.getUserRef().setKey(KeyFactory.stringToKey((String) input.get(PARAM_USER_KEY)));
+        Key userKey = KeyFactory.stringToKey((String) input.get(PARAM_USER_KEY));
+        task.getUserRef().setKey(userKey);
+        task.setUser(Datastore.get(tx, User.class, userKey));
         
         String parentKeyString = (String) input.get(PARAM_PARENT_KEY);
         if (isNull(parentKeyString)) {
@@ -113,7 +117,9 @@ public class TaskService {
             at = Datastore.get(tx, At.class, task.getAtRef().getKey());
         }
         at.getUserRef().setKey(task.getUserRef().getKey());
-        at.refreshRanges(task.getBeginAt());
+        at.refreshDate(task.getBeginAt());
+        
+        task.setLikeCount(at.getLike());
         
         return at;
     }

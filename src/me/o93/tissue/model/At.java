@@ -2,6 +2,7 @@ package me.o93.tissue.model;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -112,7 +113,7 @@ public class At implements Serializable {
         return ranges;
     }
 
-    public void refreshRanges(Date date) {
+    public void refreshDate(Date date) {
         DecimalFormat dateFormat = new DecimalFormat(DATE_FORMAT);
         String dateString = DATE + dateFormat.format(date.getTime());
         
@@ -128,11 +129,23 @@ public class At implements Serializable {
         setRanges(ranges);
     }
     
-    public void refreshRanges(long like) {
+    public void refreshLike(long like) {
         DecimalFormat likeFormat = new DecimalFormat(LIKE_FORMAT);
         String likeString = LIKE + likeFormat.format(like);
         
         List<String> ranges = getRanges();
         ranges.set(1, likeString);
+    }
+    
+    public long getLike() {
+        if (ranges.size() < 2) return 0;
+        
+        DecimalFormat likeFormat = new DecimalFormat(LIKE + LIKE_FORMAT);
+        try {
+            return likeFormat.parse(ranges.get(1)).longValue();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }
