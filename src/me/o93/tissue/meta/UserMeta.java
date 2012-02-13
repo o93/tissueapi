@@ -1,6 +1,6 @@
 package me.o93.tissue.meta;
 
-//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-02-11 21:38:30")
+//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-02-13 19:23:47")
 /** */
 public final class UserMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.model.User> {
 
@@ -117,10 +117,6 @@ public final class UserMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
             writer.setNextPropertyName("name");
             encoder0.encode(writer, m.getName());
         }
-        if(m.getVersion() != null){
-            writer.setNextPropertyName("version");
-            encoder0.encode(writer, m.getVersion());
-        }
         writer.endObject();
     }
 
@@ -133,8 +129,6 @@ public final class UserMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
         m.setKey(decoder0.decode(reader, m.getKey()));
         reader = rootReader.newObjectReader("name");
         m.setName(decoder0.decode(reader, m.getName()));
-        reader = rootReader.newObjectReader("version");
-        m.setVersion(decoder0.decode(reader, m.getVersion()));
         return m;
     }
 }

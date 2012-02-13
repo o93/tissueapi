@@ -1,6 +1,6 @@
 package me.o93.tissue.meta;
 
-//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-02-13 09:07:27")
+//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-02-13 19:23:48")
 /** */
 public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.model.Task> {
 
@@ -202,10 +202,6 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
         me.o93.tissue.model.Task m = (me.o93.tissue.model.Task) model;
         writer.beginObject();
         org.slim3.datastore.json.Default encoder0 = new org.slim3.datastore.json.Default();
-        if(m.getAtRef() != null && m.getAtRef().getKey() != null){
-            writer.setNextPropertyName("atRef");
-            encoder0.encode(writer, m.getAtRef(), maxDepth, currentDepth);
-        }
         if(m.getBeginAt() != null){
             writer.setNextPropertyName("beginAt");
             encoder0.encode(writer, m.getBeginAt());
@@ -254,17 +250,10 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
             writer.setNextPropertyName("updatedAt");
             encoder0.encode(writer, m.getUpdatedAt());
         }
-        if(m.getUser() != null){
-            writer.setNextPropertyName("user");
-            encoder0.encode(writer, m.getUser());
-        }
+        org.slim3.datastore.json.Expanded encoder1 = new org.slim3.datastore.json.Expanded();
         if(m.getUserRef() != null && m.getUserRef().getKey() != null){
             writer.setNextPropertyName("userRef");
-            encoder0.encode(writer, m.getUserRef(), maxDepth, currentDepth);
-        }
-        if(m.getVersion() != null){
-            writer.setNextPropertyName("version");
-            encoder0.encode(writer, m.getVersion());
+            encoder1.encode(writer, m.getUserRef(), maxDepth, currentDepth);
         }
         writer.endObject();
     }
@@ -274,8 +263,6 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
         me.o93.tissue.model.Task m = new me.o93.tissue.model.Task();
         org.slim3.datastore.json.JsonReader reader = null;
         org.slim3.datastore.json.Default decoder0 = new org.slim3.datastore.json.Default();
-        reader = rootReader.newObjectReader("atRef");
-        decoder0.decode(reader, m.getAtRef(), maxDepth, currentDepth);
         reader = rootReader.newObjectReader("beginAt");
         m.setBeginAt(decoder0.decode(reader, m.getBeginAt()));
         reader = rootReader.newObjectReader("createdAt");
@@ -315,12 +302,9 @@ public final class TaskMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.
         }
         reader = rootReader.newObjectReader("updatedAt");
         m.setUpdatedAt(decoder0.decode(reader, m.getUpdatedAt()));
-        reader = rootReader.newObjectReader("user");
-        m.setUser(decoder0.decode(reader, m.getUser(), me.o93.tissue.model.User.class));
         reader = rootReader.newObjectReader("userRef");
-        decoder0.decode(reader, m.getUserRef(), maxDepth, currentDepth);
-        reader = rootReader.newObjectReader("version");
-        m.setVersion(decoder0.decode(reader, m.getVersion()));
+        org.slim3.datastore.json.Expanded decoder1 = new org.slim3.datastore.json.Expanded();
+        decoder1.decode(reader, m.getUserRef(), maxDepth, currentDepth);
         return m;
     }
 }

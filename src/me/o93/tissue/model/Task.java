@@ -9,6 +9,8 @@ import org.slim3.datastore.CreationDate;
 import org.slim3.datastore.Model;
 import org.slim3.datastore.ModelRef;
 import org.slim3.datastore.ModificationDate;
+import org.slim3.datastore.json.Expanded;
+import org.slim3.datastore.json.Json;
 
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.appengine.api.datastore.Key;
@@ -21,6 +23,7 @@ public class Task implements Serializable {
     private Key key;
 
     @Attribute(version = true)
+    @Json(ignore = true)
     private Long version;
 
     private String name;
@@ -36,9 +39,11 @@ public class Task implements Serializable {
     private GeoPt point;
     
     private List<String> tags;
-    
+
+    @Json(coder=Expanded.class)
     private ModelRef<User> userRef = new ModelRef<User>(User.class);
     private ModelRef<Task> parentRef = new ModelRef<Task>(Task.class);
+    @Json(ignore = true)
     private ModelRef<At> atRef = new ModelRef<At>(At.class);
     
     @Attribute(listener = CreationDate.class)
@@ -46,8 +51,6 @@ public class Task implements Serializable {
     @Attribute(listener = ModificationDate.class)
     private Date updatedAt;
 
-    @Attribute(persistent = false)
-    private User user;
     @Attribute(persistent = false)
     private long likeCount;
     
@@ -151,14 +154,6 @@ public class Task implements Serializable {
         this.repeat = repeat;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public ModelRef<User> getUserRef() {
         return userRef;
     }
@@ -198,15 +193,7 @@ public class Task implements Serializable {
     public void setSpotName(String spotName) {
         this.spotName = spotName;
     }
-
-    public GeoPt getPoint() {
-        return point;
-    }
-
-    public void setPoint(GeoPt point) {
-        this.point = point;
-    }
-
+    
     public ModelRef<At> getAtRef() {
         return atRef;
     }
@@ -217,5 +204,13 @@ public class Task implements Serializable {
 
     public long getLikeCount() {
         return likeCount;
+    }
+
+    public GeoPt getPoint() {
+        return point;
+    }
+
+    public void setPoint(GeoPt point) {
+        this.point = point;
     }
 }

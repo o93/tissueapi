@@ -52,4 +52,13 @@ public class AtTest extends AppEngineTestCase {
         assertThat(at.getRanges().get(0), is("D0000000000000002000"));
         assertThat(at.getRanges().get(1), is("L00000000002"));
     }
+    
+    @Test
+    public void getLike() throws Exception {
+        At at = new At();
+        at.refreshDate(new Date());
+        at.refreshLike(5);
+        
+        assertThat(at.getLike(), is(5L));
+    }
 }

@@ -1,6 +1,6 @@
 package me.o93.tissue.meta;
 
-//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-02-13 09:10:40")
+//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-02-13 19:23:48")
 /** */
 public final class AtMeta extends org.slim3.datastore.ModelMeta<me.o93.tissue.model.At> {
 
